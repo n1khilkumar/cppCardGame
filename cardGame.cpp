@@ -123,12 +123,12 @@ void printCpuCards()
 
 void check(int &p,int &q)
 {
-	if(p==0||q==10)
+	if(p==0)
 	{
 		cout<<"\n\nCONGRATULATIONS!! YOU WIN!! \n\nGG";
 		exit(0);
 	}
-	else if(p==10||q==0)
+	else if(q==0)
 	{
 		cout<<"\n\nCOMPUTER WINS!! \n\nTOUGH LUCK!";
 		exit(0);
