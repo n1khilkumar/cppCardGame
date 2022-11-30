@@ -36,7 +36,7 @@ class cards
 			return id;
 		}
 		
-		void print_c()
+		void print_c()								//Function that prints card
 		{	
 			cout<<endl;
 			if(colour=='b') SetConsoleTextAttribute(hConsole,8);
@@ -71,14 +71,14 @@ class cards
 		}
 }card[52] = {{1,'2',3,'r'},{2,'2',4,'r'},{3,'2',5,'b'},{4,'2',6,'b'},{5,'3',3,'r'},{6,'3',4,'r'},{7,'3',5,'b'},{8,'3',6,'b'},{9,'4',3,'r'},{10,'4',4,'r'},{11,'4',5,'b'},{12,'4',6,'b'},{13,'5',3,'r'},{14,'5',4,'r'},{15,'5',5,'b'},{16,'5',6,'b'},{17,'6',3,'r'},{18,'6',4,'r'},{19,'6',5,'b'},{20,'6',6,'b'},{21,'7',3,'r'},{22,'7',4,'r'},{23,'7',5,'b'},{24,'7',6,'b'},{25,'8',3,'r'},{26,'8',4,'r'},{27,'8',5,'b'},{28,'8',6,'b'},{29,'9',3,'r'},{30,'9',4,'r'},{31,'9',5,'b'},{32,'9',6,'b'},{33,'0',3,'r'},{34,'0',4,'r'},{35,'0',5,'b'},{36,'0',6,'b'},{37,'A',3,'r'},{38,'A',4,'r'},{39,'A',5,'b'},{40,'A',6,'b'},{41,'J',3,'r'},{42,'J',4,'r'},{43,'J',5,'b'},{44,'J',6,'b'},{45,'Q',3,'r'},{46,'Q',4,'r'},{47,'Q',5,'b'},{48,'Q',6,'b'},{49,'k',3,'r'},{50,'k',4,'r'},{51,'k',5,'b'},{52,'k',6,'b'}};
 
-void shuffle_cards(int n)
+void shuffle_cards(int n)							//Function that shuffles card
 {
 	
 	for(int i = 1;i<=52;i++) shuffled_deck.emplace_back(i);
 	
 	srand(time(0));
 	unsigned seed = rand();
-    shuffle(shuffled_deck.begin(), shuffled_deck.end(), default_random_engine(seed));
+    	shuffle(shuffled_deck.begin(), shuffled_deck.end(), default_random_engine(seed));
 	
 	for(int i=0;i<n;i++) 
 	{	
@@ -90,7 +90,7 @@ void shuffle_cards(int n)
 	}
 }
 
-int findJustHigh(int x)
+int findJustHigh(int x)								//Function that finds the higher card than the tableau card for computer
 {
 	int t = 0;
 	for(auto it:cpu_c)
@@ -100,7 +100,7 @@ int findJustHigh(int x)
 	return t;
 }
 
-void printPlayerCards()
+void printPlayerCards()								//Function that prints player card
 {
 	int i=1;
 	cout<<"\n\nPlayer's' pile: "<<endl;
@@ -112,7 +112,7 @@ void printPlayerCards()
 	}
 }
 
-void printCpuCards()
+void printCpuCards()								//Function that prints cpu card (Not used : Fair Play)
 {
 	cout<<"\nCPU cards are: "<<endl;
 	for(auto it:cpu_c)
@@ -121,7 +121,7 @@ void printCpuCards()
 	}
 }
 
-void check(int &p,int &q)
+void check(int &p,int &q)							//checks if p or q reaches 0, p means total cards on player, q means total cards on cpu
 {
 	if(p==0)
 	{
@@ -137,7 +137,7 @@ void check(int &p,int &q)
 
 void computerTurn(int &p,int &q,int key);
 
-void playerTurnInitial(int &p,int &q)
+void playerTurnInitial(int &p,int &q)						//Function that begins the game
 {
 	int p_i;
 	char inp;
@@ -157,36 +157,36 @@ void playerTurnInitial(int &p,int &q)
 	}
 	cout<<"\nTableau Pile (Top Card): "<<endl;
 	auto it1 = player_c.begin();
-    advance(it1, playerInput-1);
-    card[*it1-1].print_c();
-    p--;
-    int temp1 = *it1;
-    tableau_pile.emplace(*it1);
-    player_c.erase(*it1);
-    computerTurn(p,q,temp1);
+    	advance(it1, playerInput-1);
+  	card[*it1-1].print_c();
+    	p--;
+    	int temp1 = *it1;
+    	tableau_pile.emplace(*it1);
+    	player_c.erase(*it1);
+    	computerTurn(p,q,temp1);
 }
 
 void playerTurn(int &p,int &q,int key);
 
-void computerTurn(int &p,int &q,int key)
+void computerTurn(int &p,int &q,int key)					//Function that initiate computer's turn
 {
 	check(p,q);
 	string temp;
 	cout<<"\nWaiting for computer's turn...\nPress any key to continue..";
 	temp = getch();
 	int justHigh = findJustHigh(key);
-    if(justHigh==0) 
-    {
-    	cout<<"\nComputer's hand doesn't have a card having higher rank than your card..";
-    	cout<<"\nComputer will now take cards in tableau pile... press any key to continue: ";
-    	for(auto it:tableau_pile)
+    	if(justHigh==0) 
     	{
-    		cpu_c.emplace(it);
-    		q++;
+    		cout<<"\nComputer's hand doesn't have a card having higher rank than your card..";
+    		cout<<"\nComputer will now take cards in tableau pile... press any key to continue: ";
+    		for(auto it:tableau_pile)
+    		{
+    			cpu_c.emplace(it);
+    			q++;
 		} 
 		tableau_pile.clear();
 		temp = getch();
-    	playerTurnInitial(p,q);
+    		playerTurnInitial(p,q);
 	}
 	else
 	{
@@ -201,7 +201,7 @@ void computerTurn(int &p,int &q,int key)
 	}
 }
 
-void playerTurn(int &p,int &q,int key)
+void playerTurn(int &p,int &q,int key)						//Function that initiate player's turn after computer made its move
 {
 	check(p,q);
 	int playerInput;
@@ -219,11 +219,11 @@ void playerTurn(int &p,int &q,int key)
 		playerTurn(p,q,key);
 	}
 	auto it = player_c.begin();
-    advance(it, playerInput-1);
-    if(card[*it-1].returnId()>card[key-1].returnId()||card[*it-1].returnRank()==card[key-1].returnRank())
-    {
-    	cout<<"\nCard is higher or equal than the tableau card.."<<endl;
-    	cout<<"\nTableau Pile (Top Card): "<<endl;
+    	advance(it, playerInput-1);
+    	if(card[*it-1].returnId()>card[key-1].returnId()||card[*it-1].returnRank()==card[key-1].returnRank())
+    	{
+    		cout<<"\nCard is higher or equal than the tableau card.."<<endl;
+    		cout<<"\nTableau Pile (Top Card): "<<endl;
    	 	card[*it-1].print_c();
    	 	tableau_pile.emplace(*it);
    	 	int t = *it;
@@ -237,9 +237,9 @@ void playerTurn(int &p,int &q,int key)
 		cout<<"\nPress any key to continue: ";
 		temp = getch();
 		for(auto iter:tableau_pile)
-    	{
-    		player_c.emplace(iter);
-    		p++;
+    		{
+    			player_c.emplace(iter);
+    			p++;
 		}
 		tableau_pile.clear();
 		playerTurnInitial(p,q);
